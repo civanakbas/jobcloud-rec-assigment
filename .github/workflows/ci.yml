@@ -1,0 +1,95 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.19"
+          enable-cache: true
+      - run: make sync
+      - run: make check
+      - run: make test
+
+  container:
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.19"
+          enable-cache: true
+      - run: make sync
+      - name: Generate synthetic model offline
+        run: uv run python -m tests.support --out artifacts/synthetic.joblib
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          push: false
+          platforms: linux/amd64
+          tags: mlops-assignment:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      - name: Verify the built image offline through Compose
+        run: >-
+          uv run python scripts/smoke_container.py
+          --image mlops-assignment:ci --artifact artifacts/synthetic.joblib
+      - name: Save the tested image (no rebuild during publication)
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: docker save --output tested-image.tar mlops-assignment:ci
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          name: tested-image-${{ github.run_attempt }}
+          path: tested-image.tar
+          compression-level: 0
+          retention-days: 2
+          if-no-files-found: error
+
+  publish:
+    needs: container
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.19"
+          enable-cache: true
+      - run: uv sync --locked --no-dev
+      - uses: actions/download-artifact@v4
+        with:
+          name: tested-image-${{ github.run_attempt }}
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish the tested image and record its digest
+        run: uv run --locked --no-dev --offline python -m mlops_assignment.delivery.release publish
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-manifest-${{ github.run_attempt }}
+          path: release.json
+          if-no-files-found: error
+          retention-days: 90

@@ -1,0 +1,5 @@
+# compose run does not publish service ports; HTTP checks run inside the container.
+services:
+  api:
+    build: !reset null
+    network_mode: none

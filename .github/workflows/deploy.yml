@@ -1,0 +1,90 @@
+name: Deploy (manual example)
+
+on:
+  workflow_dispatch:
+    inputs:
+      ci_run_id:
+        description: Successful main-branch CI run containing the release manifest
+        required: true
+        type: string
+      image_digest:
+        description: Exact sha256 digest recorded in that CI run
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      actions: read
+    outputs:
+      image: ${{ steps.evidence.outputs.image }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.19"
+          enable-cache: true
+      - run: uv sync --locked --no-dev
+      - name: Download CI evidence and verify digest
+        id: evidence
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CI_RUN_ID: ${{ inputs.ci_run_id }}
+          IMAGE_DIGEST: ${{ inputs.image_digest }}
+        run: uv run --locked --no-dev --offline python -m mlops_assignment.delivery.release verify
+
+  deploy:
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: production
+    permissions:
+      contents: read
+      packages: read
+      id-token: write
+    env:
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      ECR_REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+      ECS_CLUSTER: ${{ vars.ECS_CLUSTER }}
+      ECS_SERVICE: ${{ vars.ECS_SERVICE }}
+      SOURCE_IMAGE: ${{ needs.verify.outputs.image }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.19"
+          enable-cache: true
+      - run: uv sync --locked --no-dev
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+      - uses: aws-actions/amazon-ecr-login@v2
+        id: ecr
+      - name: Copy the verified image to ECR without rebuilding
+        id: image
+        env:
+          ECR_REGISTRY: ${{ steps.ecr.outputs.registry }}
+        run: uv run --locked --no-dev --offline python -m mlops_assignment.delivery.deploy copy
+
+      - name: Deploy a new task revision and verify stability
+        env:
+          IMAGE: ${{ steps.image.outputs.image }}
+        run: uv run --locked --no-dev --offline python -m mlops_assignment.delivery.deploy rollout

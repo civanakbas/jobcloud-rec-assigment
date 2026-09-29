@@ -1,0 +1,32 @@
+{
+  "taxonomy_version": "exercise-2026-09-25",
+  "occupations": [
+    {"id": "software_engineer", "label": "Software Engineer", "aliases": ["software developer", "développeur logiciel", "softwareentwickler"]},
+    {"id": "data_engineer", "label": "Data Engineer", "aliases": ["big data engineer", "ingénieur data", "dateningenieur"]},
+    {"id": "registered_nurse", "label": "Registered Nurse", "aliases": ["RN", "infirmier", "infirmière", "infermiere", "pflegefachkraft"]},
+    {"id": "sales_professional", "label": "Sales Professional", "aliases": ["sales representative", "field sales engineer", "commercial", "vertrieb"]},
+    {"id": "accountant", "label": "Accountant", "aliases": ["staff accountant", "comptable", "buchhalter", "contabile"]},
+    {"id": "product_manager", "label": "Product Manager", "aliases": ["technical product manager", "chef de produit", "produktmanager"]},
+    {"id": "quality_assurance_engineer", "label": "Quality Assurance Engineer", "aliases": ["QA engineer", "ingénieur QA", "test engineer"]},
+    {"id": "retail_sales_associate", "label": "Retail Sales Associate", "aliases": ["addetto alle vendite", "sales associate", "vendeur", "verkäufer"]}
+  ],
+  "skills": [
+    {"id": "software_development", "label": "Software development", "aliases": ["software engineering", "application development"]},
+    {"id": "python", "label": "Python", "aliases": ["Python 3"]},
+    {"id": "sql", "label": "SQL", "aliases": ["Snowflake SQL"]},
+    {"id": "kafka", "label": "Apache Kafka", "aliases": ["Kafka"]},
+    {"id": "aws", "label": "Amazon Web Services", "aliases": ["AWS"]},
+    {"id": "snowflake", "label": "Snowflake", "aliases": ["Snowflake data platform"]},
+    {"id": "patient_care", "label": "Patient care", "aliases": ["nursing care", "soins infirmiers", "assistenza infermieristica"]},
+    {"id": "intensive_care", "label": "Intensive care", "aliases": ["ICU", "MICU", "soins intensifs"]},
+    {"id": "sales", "label": "Sales", "aliases": ["selling", "vente", "vendite", "vertrieb"]},
+    {"id": "customer_acquisition", "label": "Customer acquisition", "aliases": ["new customer acquisition", "akquise", "acquisition de clients"]},
+    {"id": "accounts_payable", "label": "Accounts payable", "aliases": ["AP"]},
+    {"id": "accounts_receivable", "label": "Accounts receivable", "aliases": ["AR"]},
+    {"id": "journal_entries", "label": "Journal entries", "aliases": ["general journal"]},
+    {"id": "product_management", "label": "Product management", "aliases": ["product definition", "gestion de produit", "produktmanagement"]},
+    {"id": "quality_assurance", "label": "Quality assurance", "aliases": ["QA", "assurance qualité"]},
+    {"id": "test_automation", "label": "Test automation", "aliases": ["automated testing", "automatisation des tests"]},
+    {"id": "teamwork", "label": "Teamwork", "aliases": ["team work", "travail en équipe", "lavoro in team", "teamarbeit"]}
+  ]
+}

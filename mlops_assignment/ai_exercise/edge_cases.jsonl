@@ -1,0 +1,4 @@
+{"posting_id":"e001","origin":"constructed","case":"missing_description","language":"en","title":"Data Engineer","description":null}
+{"posting_id":"e002","origin":"constructed","case":"ambiguous_content","language":"en","title":"Engineer","description":"Join our growing team and help us build the future."}
+{"posting_id":"e003","origin":"constructed","case":"empty_content","language":"en","title":"","description":""}
+{"posting_id":"e004","origin":"constructed","case":"oversized_content","language":"en","title":"Software Engineer","description_template":"Build and maintain reliable services. ","repeat":2000}

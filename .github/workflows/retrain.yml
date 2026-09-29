@@ -1,0 +1,54 @@
+name: Retrain candidate (manual example)
+
+on:
+  workflow_dispatch:
+    inputs:
+      postings_version:
+        description: S3 VersionId for DATA_BUCKET/postings.csv (not null)
+        required: true
+        type: string
+      companies_version:
+        description: S3 VersionId for DATA_BUCKET/companies/company_industries.csv (not null)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  retrain:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment: training
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      DATA_BUCKET: ${{ vars.DATA_BUCKET }}
+      MODEL_BUCKET: ${{ vars.MODEL_BUCKET }}
+      POSTINGS_VERSION: ${{ inputs.postings_version }}
+      COMPANIES_VERSION: ${{ inputs.companies_version }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.19"
+          enable-cache: true
+      - run: uv sync --locked --no-dev
+      - name: Validate snapshot selection
+        run: uv run --locked --no-dev --offline python -m mlops_assignment.delivery.candidate validate
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_TRAIN_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Download exact training object versions
+        run: uv run --locked --no-dev --offline python -m mlops_assignment.delivery.candidate download
+
+      - name: Train and validate candidate structure
+        run: uv run --locked --no-dev --offline python -m mlops_assignment.delivery.candidate train
+
+      - name: Record provenance and upload candidate only
+        run: uv run --locked --no-dev --offline python -m mlops_assignment.delivery.candidate upload

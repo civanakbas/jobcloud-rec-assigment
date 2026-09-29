@@ -1,0 +1,36 @@
+{
+  "labels_sha256": "5e8df3793c504dd78b3ddcf2ce4f8289734e5dec617e6f197110564ae98a579d",
+  "limitation": "Scripted outputs aligned with exercise labels verify pipeline execution, not LLM quality or production performance.",
+  "occupation_accuracy": 1.0,
+  "policy": "All postings included; review scored normally; fallback has no predictions; unresolved skills count as false positives; undefined skill ratios are zero.",
+  "postings": 10,
+  "postings_sha256": "baeb8b5fef3aa1fcaa21145baf15d6373d939646ea38c705ee0a5c2b861385f3",
+  "schema_valid_postings": 10,
+  "schema_validity_rate": 1.0,
+  "skills": {
+    "averaging": "micro",
+    "f1": 1.0,
+    "false_negative": 0,
+    "false_positive": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "true_positive": 24
+  },
+  "states": {
+    "accepted": 10,
+    "fallback": 0,
+    "review": 0
+  },
+  "version": "enrichment-v1:0b50b410974ce53c0087b192f7590353ba17cc181dd5832e0eb64593c09325f4",
+  "version_inputs": {
+    "confidence_threshold": 0.8,
+    "implementation_sha256": "7ceff068b3b556bde70d81f75990f06c6610ab0bc01e21567e88a5f94c97afa7",
+    "max_attempts": 2,
+    "prompt": "title-and-description-verbatim-v1",
+    "provider_version": "supplied-scripted:44fb370a67aafaf3455c95387782bc07c03d0b184ac11480118d0fc5e9ef0c17",
+    "schema_sha256": "613c7061cbca16c6a328a03686a45ea50507dbbce18faf15aa34dcf6e34d5c76",
+    "taxonomy_sha256": "f24ecc4d99aaf435c5429d9b02dc257496a424359638dd8f029395ac8305bc59",
+    "taxonomy_version": "exercise-2026-09-25",
+    "workflow": "enrichment-v1"
+  }
+}

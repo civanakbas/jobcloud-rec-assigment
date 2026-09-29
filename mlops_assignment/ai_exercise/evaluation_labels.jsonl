@@ -1,0 +1,10 @@
+{"posting_id":"p001","occupation_id":"software_engineer","seniority":"unknown","skill_ids":["software_development","teamwork"],"work_arrangement":"unknown"}
+{"posting_id":"p002","occupation_id":"data_engineer","seniority":"senior","skill_ids":["kafka","python","aws","snowflake","sql"],"work_arrangement":"remote"}
+{"posting_id":"p003","occupation_id":"registered_nurse","seniority":"unknown","skill_ids":["patient_care","intensive_care"],"work_arrangement":"onsite"}
+{"posting_id":"p004","occupation_id":"sales_professional","seniority":"unknown","skill_ids":["sales","customer_acquisition"],"work_arrangement":"onsite"}
+{"posting_id":"p005","occupation_id":"accountant","seniority":"unknown","skill_ids":["accounts_payable","accounts_receivable","journal_entries"],"work_arrangement":"unknown"}
+{"posting_id":"p006","occupation_id":"product_manager","seniority":"unknown","skill_ids":["product_management"],"work_arrangement":"unknown"}
+{"posting_id":"p007","occupation_id":"registered_nurse","seniority":"unknown","skill_ids":["patient_care"],"work_arrangement":"onsite"}
+{"posting_id":"p008","occupation_id":"sales_professional","seniority":"unknown","skill_ids":["sales","customer_acquisition","product_management"],"work_arrangement":"unknown"}
+{"posting_id":"p009","occupation_id":"quality_assurance_engineer","seniority":"unknown","skill_ids":["quality_assurance","test_automation","teamwork"],"work_arrangement":"unknown"}
+{"posting_id":"p010","occupation_id":"retail_sales_associate","seniority":"unknown","skill_ids":["sales","teamwork"],"work_arrangement":"onsite"}

@@ -1,0 +1,57 @@
+{
+  "format_version": 1,
+  "scenarios": {
+    "valid_first_attempt": {
+      "posting_id": "p002",
+      "attempts": [
+        {"kind": "result", "value": {"occupation_id": "data_engineer", "seniority": "senior", "skill_ids": ["kafka", "python", "aws", "snowflake", "sql"], "work_arrangement": "remote", "confidence": 0.96}}
+      ],
+      "expected_state": "accepted"
+    },
+    "alias_normalization": {
+      "posting_id": "p003",
+      "attempts": [
+        {"kind": "result", "value": {"occupation_id": "RN", "seniority": "unknown", "skill_ids": ["nursing care", "MICU"], "work_arrangement": "onsite", "confidence": 0.91}}
+      ],
+      "expected_state": "accepted"
+    },
+    "malformed_then_valid": {
+      "posting_id": "p005",
+      "attempts": [
+        {"kind": "result", "value": {"occupation_id": "accountant", "seniority": "experienced", "skill_ids": "AP, AR", "confidence": 1.4}},
+        {"kind": "result", "value": {"occupation_id": "accountant", "seniority": "unknown", "skill_ids": ["accounts_payable", "accounts_receivable", "journal_entries"], "work_arrangement": "unknown", "confidence": 0.93}}
+      ],
+      "expected_state": "accepted",
+      "expected_attempt_count": 2
+    },
+    "low_confidence": {
+      "posting_id": "e002",
+      "attempts": [
+        {"kind": "result", "value": {"occupation_id": null, "seniority": "unknown", "skill_ids": [], "work_arrangement": "unknown", "confidence": 0.31}}
+      ],
+      "expected_state": "review"
+    },
+    "unknown_taxonomy_concept": {
+      "posting_id": "p006",
+      "attempts": [
+        {"kind": "result", "value": {"occupation_id": "growth_hacker", "seniority": "mid", "skill_ids": ["growth_magic"], "work_arrangement": "hybrid", "confidence": 0.88}}
+      ],
+      "expected_state": "review"
+    },
+    "timeout": {
+      "posting_id": "p001",
+      "attempts": [
+        {"kind": "timeout", "message": "provider deadline exceeded"}
+      ],
+      "expected_state": "fallback"
+    },
+    "invalid_twice": {
+      "posting_id": "e003",
+      "attempts": [
+        {"kind": "result", "value": {"occupation_id": 42}},
+        {"kind": "result", "value": {"skill_ids": "none", "confidence": -1}}
+      ],
+      "expected_state": "fallback"
+    }
+  }
+}

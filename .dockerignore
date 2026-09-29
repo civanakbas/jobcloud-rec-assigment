@@ -1,0 +1,28 @@
+# Keep the build context lean.
+.env/
+.venv/
+__pycache__/
+*.pyc
+*.ipynb_checkpoints/
+.git/
+.gitignore
+*.md
+!README.md
+
+# Raw data is for training only; don't ship into the serving image.
+data/
+archive*.zip
+
+# Notebook outputs
+assignment_prep.ipynb
+
+# Local package/build outputs are not build inputs.
+dist/
+build/
+*.egg-info/
+.ruff_cache/
+.pytest_cache/
+reports/
+
+# Baseline and CI-generated models are mounted at runtime, never build inputs.
+artifacts/

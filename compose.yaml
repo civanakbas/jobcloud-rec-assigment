@@ -1,0 +1,18 @@
+services:
+  api:
+    image: ${API_IMAGE:-mlops-assignment:local}
+    build:
+      context: .
+      target: runtime
+    ports:
+      - "127.0.0.1:${API_PORT:-8000}:8000"
+    environment:
+      PORT: "8000"
+      VIEWS_MODEL_ARTIFACT: /app/artifacts/views_baseline.joblib
+    volumes:
+      - type: bind
+        source: ${MODEL_ARTIFACT:-./artifacts/views_baseline.joblib}
+        target: /app/artifacts/views_baseline.joblib
+        read_only: true
+        bind:
+          create_host_path: false

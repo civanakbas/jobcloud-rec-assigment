@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mlops-assignment"
+version = "0.1.0"
+description = "Baseline model + serving for predicting job-posting views."
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "pandas==2.2.3",
+    "numpy==1.26.4",
+    "scikit-learn==1.5.2",
+    "joblib==1.4.2",
+    "fastapi==0.115.6",
+    "uvicorn[standard]==0.34.0",
+    "pydantic==2.10.4",
+    "prometheus-client==0.21.1",
+    "boto3==1.35.90",
+    "jsonschema==4.26.0",
+    "fire>=0.7.1",
+]
+
+[dependency-groups]
+dev = [
+    "pytest==8.3.4",
+    "httpx==0.28.1",
+    "ruff>=0.16.9",
+    "ty>=0.0.84",
+]
+
+[project.scripts]
+views-train = "mlops_assignment.train:main"
+views-validate = "mlops_assignment.validate:main"
+views-enrich = "mlops_assignment.enrichment.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["mlops_assignment*"]
+
+[tool.setuptools.package-data]
+"mlops_assignment.ai_exercise" = ["*.json", "*.jsonl"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["."]
+extend-exclude = ["ai_exercise"]
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F", "I"]
+
+[tool.ty.environment]
+python-version = "3.12"
+
+[tool.ty.src]
+include = ["mlops_assignment", "tests", "scripts", "presentation"]
+exclude = ["mlops_assignment/ai_exercise"]

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/schemas/posting-enrichment-v1.json",
+  "title": "PostingEnrichment",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["occupation_id", "seniority", "skill_ids", "work_arrangement", "confidence"],
+  "properties": {
+    "occupation_id": {"type": ["string", "null"]},
+    "seniority": {"enum": ["entry", "mid", "senior", "unknown"]},
+    "skill_ids": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true,
+      "maxItems": 8
+    },
+    "work_arrangement": {"enum": ["onsite", "hybrid", "remote", "unknown"]},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1}
+  }
+}

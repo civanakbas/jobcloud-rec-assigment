@@ -1,0 +1,10 @@
+{"posting_id":"p001","value":{"occupation_id":"software_engineer","seniority":"unknown","skill_ids":["software_development","teamwork"],"work_arrangement":"unknown","confidence":0.91}}
+{"posting_id":"p002","value":{"occupation_id":"data_engineer","seniority":"senior","skill_ids":["kafka","python","aws","snowflake","sql"],"work_arrangement":"remote","confidence":0.96}}
+{"posting_id":"p003","value":{"occupation_id":"registered_nurse","seniority":"unknown","skill_ids":["patient_care","intensive_care"],"work_arrangement":"onsite","confidence":0.94}}
+{"posting_id":"p004","value":{"occupation_id":"sales_professional","seniority":"unknown","skill_ids":["sales","customer_acquisition"],"work_arrangement":"onsite","confidence":0.90}}
+{"posting_id":"p005","value":{"occupation_id":"accountant","seniority":"unknown","skill_ids":["accounts_payable","accounts_receivable","journal_entries"],"work_arrangement":"unknown","confidence":0.95}}
+{"posting_id":"p006","value":{"occupation_id":"product_manager","seniority":"unknown","skill_ids":["product_management"],"work_arrangement":"unknown","confidence":0.89}}
+{"posting_id":"p007","value":{"occupation_id":"registered_nurse","seniority":"unknown","skill_ids":["patient_care"],"work_arrangement":"onsite","confidence":0.92}}
+{"posting_id":"p008","value":{"occupation_id":"sales_professional","seniority":"unknown","skill_ids":["sales","customer_acquisition","product_management"],"work_arrangement":"unknown","confidence":0.90}}
+{"posting_id":"p009","value":{"occupation_id":"quality_assurance_engineer","seniority":"unknown","skill_ids":["quality_assurance","test_automation","teamwork"],"work_arrangement":"unknown","confidence":0.93}}
+{"posting_id":"p010","value":{"occupation_id":"retail_sales_associate","seniority":"unknown","skill_ids":["sales","teamwork"],"work_arrangement":"onsite","confidence":0.90}}
